@@ -5,20 +5,21 @@ import Cards from '../components/Cards';
 
 export async function getStaticProps() {
 
-  const maxPokemons = 251;
-  const api = "https://pokeapi.co/api/v2/pokemon";
+  const randomPokemons = Array.from({length: 8}, () => Math.floor(Math.random() * 858) + 1);
 
-  const res = await fetch(`${api}/?limit=${maxPokemons}`)
-  const data = await res.json();
+  const api = "https://pokeapi.co/api/v2/pokemon/";
 
-  // add pokemon index
-  data.results.forEach((item, index) => {
-    item.id = index + 1
-  })
+  const data = [];
+
+  for (let i in randomPokemons){
+    let pokeName = await fetch(api+randomPokemons[i])
+    let pokeName2 = await pokeName.json()
+    data.push({name: pokeName2.species.name, id:randomPokemons[i]})
+  }
 
   return {
     props: {
-      pokemons: data.results,
+      pokemons: data,
     },
   }
 }

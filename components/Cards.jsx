@@ -5,7 +5,6 @@ import Link from 'next/link';
 
 import styles from "../styles/Cards.module.scss";
 
-
 export default function Cards({pokemon}) {
   return <div className={styles.card} >
       <Image
